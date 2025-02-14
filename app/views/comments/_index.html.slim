@@ -1,0 +1,6 @@
+.flex.items-center.space-x-2 id="comment-form-section"
+  = render "comments/form", project: project
+
+.mt-6.space-y-4 id="comments-#{project.slug}"
+  - comments.recent.each do |comment|
+    = render "comments/comment", comment: comment

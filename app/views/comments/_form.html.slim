@@ -1,0 +1,6 @@
+= form_with(model: [project, Comment.new], class: "w-full") do |f|
+  .w-full
+    = f.label :content, "Add a Comment", class: "block font-medium text-gray-700"
+    = f.text_area :content, class: "w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+
+  = f.submit "Save", class: "bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-md"

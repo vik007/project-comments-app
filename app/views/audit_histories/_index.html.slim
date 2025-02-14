@@ -1,0 +1,10 @@
+.mt-6.space-y-4
+  - audits.each do |audit|
+    .mt-6
+      .comment.bg-gray-100.p-3.rounded-md.mb-2.p-4
+        p.font-semibold
+          span.me-1 = audit.user&.name || 'Created by Seed'
+          span.text-sm.text-gray-500 = time_in_word(audit.created_at)
+
+        - audit.audited_changes.each do |field, change|
+          = formatted_audit_change(field, change)

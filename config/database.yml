@@ -8,8 +8,8 @@ default: &default
 
 development:
   <<: *default
-  database: project_comments_app_dev
+  database: project_flow_dev
 
 test:
   <<: *default
-  database: project_comments_app_test
+  database: project_flow_test

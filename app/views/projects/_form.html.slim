@@ -1,0 +1,22 @@
+= form_with(model: project, class: "contents") do |form|
+  - if project.errors.any?
+    #error_explanation.bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-md.mt-3
+      h2 = pluralize(project.errors.count, "error") + " prohibited this project from being saved:"
+      ul.list-disc.ml-6
+        - project.errors.each do |error|
+          li = error.full_message
+
+  .my-5
+    = form.label :title
+    = form.text_field :title, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": project.errors[:title].none?, "border-red-400 focus:outline-red-600": project.errors[:title].any?}]
+
+  .my-5
+    = form.label :status
+    = form.select :status, options_for_select(Project.select_options, form.object.status), {}, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600"
+
+  .my-5
+    = form.label :description
+    = form.text_area :description, class: "w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+
+  .inline
+    = form.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer"

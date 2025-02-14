@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-
+  resources :projects do
+    resources :comments
+  end
   devise_for :users
-
+  root "projects#index"
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
@@ -11,4 +13,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  concern :auditable do
+    resources :audit_histories, only: :index
+  end
+
+  resources :projects, concerns: :auditable
+  resources :comments, concerns: :auditable
 end

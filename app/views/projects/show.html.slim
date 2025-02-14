@@ -1,0 +1,21 @@
+- content_for :title, "Showing Project"
+= turbo_stream_from("comments_stream")
+.w-full.mx-auto.bg-white.mt-3
+  / Notification
+  = render(NotificationComponent.new(notice: notice))
+
+  / Project Details
+  .mb-6
+    = render(ProjectDetailsComponent.new(project: @project))
+
+  / Comment Section
+  .flex.items-center.justify-between.border-t.mt-3.py-4.mb-4
+    h2.text-xl.font-semibold.text-gray-800 Activity
+    .flex.space-x-2
+      = link_to project_comments_path(@project), class: "px-3 py-1 text-sm font-medium text-blue-600 border border-gray-300 rounded-md focus:outline-none", data: { turbo_stream: true } do
+        | Comments
+      = link_to project_audit_histories_path(@project), class: "px-3 py-1 text-sm font-medium text-blue-600 border border-gray-300 rounded-md focus:outline-none", data: { turbo_stream: true } do
+        | Status History
+
+  #section-tab
+    = render 'comments/index', comments: @project.comments.recent, project: @project

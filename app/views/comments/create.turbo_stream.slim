@@ -1,0 +1,6 @@
+- if @comment.errors.blank?
+  = turbo_stream.update "comment-form-section" do
+    = render "comments/form", project: @project
+- else
+  = turbo_stream.replace "notification-section" do
+    = render(NotificationComponent.new(notice: @comment.errors.full_messages.join(', ')))

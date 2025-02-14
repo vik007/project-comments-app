@@ -1,0 +1,32 @@
+- content_for :title, "Projects"
+
+.w-full.mx-auto
+  = render(NotificationComponent.new(notice: notice))
+
+  .flex.justify-between.items-center.mb-6.mt-3
+    h1.font-bold.text-xl Projects
+    = link_to "New Project", new_project_path, class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium"
+
+  #projects.w-full.bg-white.shadow-lg.rounded-lg.overflow-hidden
+    - if @projects.any?
+      table.min-w-full.border-collapse
+        thead
+          tr.bg-gray-100.text-left.text-sm.font-medium.uppercase
+            th.px-6.py-3.border-b #
+            th.px-6.py-3.border-b Project Name
+            th.px-6.py-3.border-b Created At
+            th.px-6.py-3.border-b.text-right Actions
+        tbody
+          - @projects.each_with_index do |project, index|
+            tr.border-b.hover:bg-gray-50
+              td.px-6.py-4 = index + 1
+              td.px-6.py-4.font-semibold.text-gray-800 = project.title
+              td.px-6.py-4.text-gray-600 = project.created_at.strftime("%b %d, %Y")
+              td.px-6.py-4.text-right.space-x-2
+                .flex.justify-end
+                  = link_to "View", project, class: "px-3 py-1 mx-1 bg-gray-100 hover:bg-gray-200 text-sm rounded-md font-medium"
+                  = link_to "Edit", edit_project_path(project), class: "px-3 mx-1 py-1 bg-blue-100 hover:bg-blue-200 text-blue-600 text-sm rounded-md font-medium"
+                  = button_to project, method: :delete, data: { turbo: false }, class: 'px-3 mx-1 py-1 bg-red-100 hover:bg-red-200 text-red-600 text-sm rounded-md font-medium' do
+                    | Delete
+    - else
+      p.text-center.my-10.text-gray-600 No projects found.

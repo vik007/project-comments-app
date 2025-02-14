@@ -1,0 +1,11 @@
+turbo-frame.mt-6 id="comment-#{comment.id}-#{comment.user_id}"
+  .comment.bg-gray-100.p-3.rounded-md.mb-2.p-4
+    p.font-semibold
+      span.me-1 = comment.user.name
+      span.text-sm.text-gray-500 = time_in_word(comment.created_at)
+
+    p = comment.content
+    - if comment_author?(comment)
+      p.mt-2
+        = button_to project_comment_path(comment.project, comment), method: :delete, data: { turbo: false }, class: 'px-3 mx-1 py-1 bg-red-100 hover:bg-red-200 text-red-600 text-sm rounded-md font-medium' do
+          | Delete
