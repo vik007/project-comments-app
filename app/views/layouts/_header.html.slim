@@ -1,0 +1,40 @@
+nav.bg-white.shadow-md
+  .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+    .flex.justify-between.items-center.h-16
+
+      // Left: Logo
+      .flex-shrink-0
+        = link_to root_path, class: "text-xl font-bold text-blue-600" do
+          | Project Flow
+
+      // Right: Navigation Links
+      .hidden.md:flex.space-x-6.items-center
+        = link_to "Projects", projects_path, class: "text-gray-700 hover:text-blue-600 font-medium"
+
+        - if user_signed_in?
+          = button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'text-red-600 hover:text-red-500 font-medium' do
+            | Logout
+        - else
+          = link_to "Sign In", new_user_session_path, class: "text-blue-600 hover:text-blue-500 font-medium"
+
+      // Mobile Menu Button
+      .sm:hidden.flex.items-center
+        button#mobile-menu-button.text-gray-700.focus:outline-none
+          svg.h-6.w-6 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"
+
+  // Mobile Menu (Hidden by default)
+  #mobile-menu.md:hidden.hidden.bg-white.border-t.border-gray-200
+    .px-4.py-3.space-y-2
+      = link_to "Projects", projects_path, class: "block text-gray-700 hover:text-blue-600 font-medium"
+
+      - if user_signed_in?
+        = link_to "Logout", destroy_user_session_path, method: :delete, class: "block text-red-600 hover:text-red-500 font-medium"
+      - else
+        = link_to "Sign In", new_user_session_path, class: "block text-blue-600 hover:text-blue-500 font-medium"
+
+  / JavaScript for Mobile Menu Toggle
+  script
+    | document.getElementById('mobile-menu-button').addEventListener('click', function () {
+    |   document.getElementById('mobile-menu').classList.toggle('hidden');
+    | });
